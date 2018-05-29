@@ -8,14 +8,8 @@
         <th>Telefono</th>
         <th>Provincia</th>
         <th>Età</th>
+        <th>Actions</th>
     </tr>
-    <tr *ngFor="let user of users">
-        <td>{{ user.name }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.fiscalCode }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.phone }}</td>
-        <td>{{ user.province }}</td>
-        <td>{{ user.age }}</td>
+    <tr app-user *ngFor="let user of users" [user-data]="user" (onDeleteUser)="onDeleteUser($event)">
     </tr>
 </table>

@@ -7,12 +7,6 @@ th {
     color: green;
 }
 
-th, td {
+th {
     padding: 5px;
-}
-
-td {
-    background: silver; 
-    color: red;
-    border: 1px solid #fff;
 }
