@@ -1,6 +1,10 @@
+import { User } from './../classes/user';
+import { UserInterface } from '../interfaces/user.interface';
+
 export class UserService {
-    private users = [
-        {
+    private users: User[] = [
+        {   
+            id: 1,
             name: "Roberto",
             lastName: "Bani",
             fiscalCode: "BNARRT83L26D612V",
@@ -10,6 +14,7 @@ export class UserService {
             age: 34
         },
         {
+            id: 2,
             name: "Sandra",
             lastName: "Felex",
             fiscalCode: "BNARRT83L26D612V",
@@ -20,6 +25,7 @@ export class UserService {
 
         },
         {
+            id: 3,
             name: "Alfiero",
             lastName: "Bani",
             fiscalCode: "BNARRT83L26D612V",
@@ -41,5 +47,16 @@ export class UserService {
         if (index >=0) {
             this.users.splice(index,1);
         }
+    }
+
+    updateUser(user: UserInterface) {
+        const index = this.users.findIndex((v) => v.id == user.id);
+        if (index !== -1) {
+            this.users[index] = user;
+        }
+    }
+
+    createUser(user: UserInterface) {
+        this.users.splice(0,0,user);
     }
 }

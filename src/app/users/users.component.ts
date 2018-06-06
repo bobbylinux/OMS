@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { UserService } from "./user.service";
+import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import { UserService } from "../services/user.service";
+import { User } from './../classes/user';
 
 @Component({
     selector: 'app-users',
@@ -9,7 +10,9 @@ import { UserService } from "./user.service";
 
 export class UsersComponent implements OnInit {
     title= "Users";
-    users= [];
+    users: User[] = [];
+
+    @Output() updateUser = new EventEmitter<User>();
 
     constructor(private service: UserService) {
     }
@@ -18,7 +21,12 @@ export class UsersComponent implements OnInit {
         this.users = this.service.getUsers();
     }
 
-    onDeleteUser(user) {
+    onDeleteUser(user: User) {
         this.service.deleteUser(user);
+    }
+
+    onSelectUser(user: User) {
+        const userCopy = Object.assign({},user);
+        this.updateUser.emit(userCopy);
     }
 }
