@@ -1,8 +1,8 @@
-<form #form="ngForm" class="user-form">{{ form.form.value | json }}
+<form #form="ngForm" class="user-form">
     <div class="form-group">
         <input type="hidden" [(ngModel)]="user.id" name="id">
         <label for="name">First Name</label>
-        <input [(ngModel)]="user.name" type="text" id="name" name="name">
+        <input [(ngModel)]="user.name" type="text" id="name" name="name" class="form-control">
     </div>
     <div class="form-group">
         <label for="lastname">Last Name</label>
@@ -28,7 +28,8 @@
         <label for="fiscalcode">Age</label>
         <input [(ngModel)]="user.age" type="number" id="age" name="age" class="form-control">
     </div>
-    <div class="form-group form-footer">
+    <div class="form-group form-footer text-center buttons">
+        <button (click)="backToUsers()" class="btn btn-primary">BACK</button>
         <button class="btn btn-secondary" (click)="resetForm(form.form)"> RESET</button>
         <button type="submit" class="btn btn-success" (click)="saveUser()"> SAVE</button>
     </div>

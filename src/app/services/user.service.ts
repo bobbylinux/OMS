@@ -42,6 +42,10 @@ export class UserService {
         return this.users;
     }
 
+    getUser(id: number) {
+        return this.users.find(user => user.id === id);       
+    }
+
     deleteUser(user){
         let index = this.users.indexOf(user);
         if (index >=0) {
@@ -57,6 +61,7 @@ export class UserService {
     }
 
     createUser(user: UserInterface) {
+        user.id = this.users.length + 1;
         this.users.splice(0,0,user);
     }
 }
