@@ -10,48 +10,77 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class UserDetailComponent implements OnInit {
 
-  
+
   private userCopy: User;
   private __user: User;
 
-  @Input('user') set user(user: User){
-    console.log("alert");
+  @Input('user') set user(user: User) {
     this.__user = user;
-    this.userCopy = Object.assign({},user);
+    this.userCopy = Object.assign({}, user);
   }
 
   get user() {
-    console.log("alert");
     return this.__user;
   }
 
-  
-  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
-    
-    console.log("alert");
-  }
+
+  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    
-    console.log("alert");
     this.user = new User();
     this.route.params.subscribe(
       (params) => {
         if (!params.id) {
           return;
         }
-        this.user = this.userService.getUser(+params.id);
+        this.userService.getUser(+params.id).subscribe(
+          response => this.user = response['data']
+        );
       }
     );
   }
 
   saveUser() {
     if (this.user.id > 0) {
-      this.userService.updateUser(this.user);
+      this.updateUser();
     } else {
-      this.userService.createUser(this.user);
+      this.createUser();
     }
-    this.router.navigate(['users']);
+  }
+
+  createUser() {
+    this.userService.createUser(this.user).subscribe(response => {
+      if (response['success']) {
+        alert("user " + this.user.name + " creato correttamente");
+      } else {
+        alert(response['message']);
+      }
+      this.router.navigate(['users']);
+    });
+  }
+
+  updateUser() {
+    this.userService.updateUser(this.user).subscribe(response => {
+      const user = response['data'];
+      if (response['success']) {
+        alert("user " + this.user.name + " modificato correttamente");
+      } else {
+        alert(response['message']);
+      }
+      this.router.navigate(['users']);
+    });
+  }
+
+  deleteUser() {
+    this.userService.updateUser(this.user).subscribe(response => {
+      const user = response['data'];
+      if (response['success']) {
+        alert("user " + this.user.name + " cancellato correttamente");
+      } else {
+        alert(response['message']);
+      }
+      this.router.navigate(['users']);
+    });
   }
 
   resetForm(form) {
@@ -61,7 +90,7 @@ export class UserDetailComponent implements OnInit {
       this.user = this.userCopy;
     }
   }
-  
+
   backToUsers() {
     this.router.navigate(['users']);
   }

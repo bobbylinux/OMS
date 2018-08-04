@@ -1,67 +1,35 @@
 import { User } from './../classes/user';
 import { UserInterface } from '../interfaces/user.interface';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class UserService {
-    private users: User[] = [
-        {   
-            id: 1,
-            name: "Roberto",
-            lastName: "Bani",
-            fiscalCode: "BNARRT83L26D612V",
-            email: "roberto.bani@gmail.com",
-            province: "Firenze",
-            phone: "3492906672",
-            age: 34
-        },
-        {
-            id: 2,
-            name: "Sandra",
-            lastName: "Felex",
-            fiscalCode: "BNARRT83L26D612V",
-            email: "roberto.bani@gmail.com",
-            province: "Firenze",
-            phone: "3492906672",
-            age: 35
+    users: User[] = [];
+    private API_URL = "http://localhost:8000/users";
 
-        },
-        {
-            id: 3,
-            name: "Alfiero",
-            lastName: "Bani",
-            fiscalCode: "BNARRT83L26D612V",
-            email: "roberto.bani@gmail.com",
-            province: "Firenze",
-            phone: "3492906672",
-            age: 71
-        }
-    ];
-    constructor() {
+    constructor(private httpClient: HttpClient) {
     }
 
     getUsers() {
-        return this.users;
+        return this.httpClient.get(this.API_URL);
     }
 
     getUser(id: number) {
-        return this.users.find(user => user.id === id);       
+        return this.httpClient.get(this.API_URL+"/"+id);
     }
 
-    deleteUser(user){
-        let index = this.users.indexOf(user);
-        if (index >=0) {
-            this.users.splice(index,1);
-        }
+    deleteUser(user: UserInterface){
+        const data = {_method: "DELETE"};
+        return this.httpClient.post(this.API_URL + '/' + user.id, data);
     }
 
     updateUser(user: UserInterface) {
-        const index = this.users.findIndex((v) => v.id == user.id);
-        if (index !== -1) {
-            this.users[index] = user;
-        }
+        user['_method'] = "PUT";
+        return this.httpClient.post(this.API_URL + '/' + user.id, user);
     }
 
     createUser(user: UserInterface) {
-        user.id = this.users.length + 1;
-        this.users.splice(0,0,user);
+        return this.httpClient.post(this.API_URL, user);
     }
 }
