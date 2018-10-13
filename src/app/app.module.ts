@@ -14,7 +14,8 @@ import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { UserDataComponent } from './user-data/user-data.component';
 import { RoutingModuleModule } from './routing-module.module';
 import { RouteGuardService } from './route-guard.service';
-
+import { AuthService } from './services/auth.service';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -26,16 +27,17 @@ import { RouteGuardService } from './route-guard.service';
     NavComponent,
     ModalBasicComponent,
     UserDataComponent,
+    LoginComponent,
   ],
   imports: [
-BrowserModule,
+    BrowserModule,
     FormsModule,
     HttpClientModule,
     AngularFontAwesomeModule,
     NgbModule.forRoot(),
     RoutingModuleModule
   ],
-  providers: [UserService, RouteGuardService],
+  providers: [UserService, RouteGuardService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
