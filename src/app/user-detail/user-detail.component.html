@@ -1,36 +1,79 @@
 <form #form="ngForm" class="user-form">
-    <div class="form-group">
-        <input type="hidden" [(ngModel)]="user.id" name="id">
-        <label for="name">First Name</label>
-        <input [(ngModel)]="user.name" type="text" id="name" name="name" class="form-control">
+    <div class="form-row">
+        <div class="form-group col-sm-6">
+            <input type="hidden" [(ngModel)]="user.id" name="id">
+            <label for="name">First Name</label>
+            <input required minlength="3" pattern="[a-zA-Z\s]*" #firstName="ngModel" [(ngModel)]="user.name" type="text"
+                id="name" name="name" class="form-control">
+            <div *ngIf="firstName.dirty && firstName.touched && firstName.invalid">
+                <div class="alert-danger" *ngIf="firstName.errors.required">
+                    The field first name is required
+                </div>
+                <div class="alert-danger" *ngIf="firstName.errors.minlength">
+                    The min length of field first name is {{firstName.errors.minlength.requiredLength}} characters
+                </div>
+                <div class="alert-danger" *ngIf="firstName.errors.pattern">
+                    The field first name pattern is {{firstName.errors.pattern.requiredPattern}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="lastname">Last Name</label>
+            <input required minlength="3" pattern="[a-zA-Z\s]*" #lastName="ngModel" [(ngModel)]="user.lastname" type="text" id="lastname"
+                name="lastname" class="form-control">
+            <div *ngIf="lastName.dirty && lastName.touched && lastName.invalid">
+                <div class="alert-danger" *ngIf="lastName.errors.required">
+                    The field last name is required
+                </div>
+                <div class="alert-danger" *ngIf="lastName.errors.minlength">
+                    The min length of field last name is {{lastName.errors.minlength.requiredLength}} characters
+                </div>
+                <div class="alert-danger" *ngIf="lastName.errors.pattern">
+                    The field last name pattern is {{lastName.errors.pattern.requiredPattern}}
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="lastname">Last Name</label>
-        <input [(ngModel)]="user.lastname" type="text" id="lastname" name="lastname" class="form-control">
+
+    <div class="form-row">
+        <div class="form-group col-sm-6">
+            <label for="fiscalcode">Fiscal Code</label>
+            <input [(ngModel)]="user.fiscalCode" type="text" id="fiscalcode" name="fiscalcode" class="form-control">
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="email">Email</label>
+            <input [(ngModel)]="user.email" type="email" id="email" name="email" class="form-control">
+        </div>
     </div>
-    <div class="form-group">
-        <label for="fiscalcode">Fiscal Code</label>
-        <input [(ngModel)]="user.fiscalCode" type="text" id="fiscalcode" name="fiscalcode" class="form-control">
+
+    <div class="form-row">
+        <div class="form-group col-sm-6">
+            <label for="province">Province</label>
+            <input [(ngModel)]="user.province" type="text" id="province" name="province" class="form-control">
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="phone">Phone</label>
+            <input [(ngModel)]="user.phone" type="text" id="phone" name="phone" class="form-control">
+        </div>
     </div>
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input [(ngModel)]="user.email" type="email" id="email" name="email" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="province">Province</label>
-        <input [(ngModel)]="user.province" type="text" id="province" name="province" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="phone">Phone</label>
-        <input [(ngModel)]="user.phone" type="text" id="phone" name="phone" class="form-control">
-    </div>
-    <div class="form-group">
+    <div class="form-group col-sm-6 offset-3">
         <label for="age">Age</label>
-        <input [(ngModel)]="user.age" type="number" id="age" name="age" class="form-control">
+        <input required minlength="2" pattern="[0-9]{1,3}" #age="ngModel" [(ngModel)]="user.age" type="number" id="age" name="age" class="form-control">
+        <div *ngIf="age.dirty && age.touched && age.invalid">
+                <div class="alert-danger" *ngIf="age.errors.required">
+                    The field age is required
+                </div>
+                <div class="alert-danger" *ngIf="age.errors.minlength">
+                    The min length of field age is {{age.errors.minlength.requiredLength}} characters
+                </div>
+                <div class="alert-danger" *ngIf="age.errors.pattern">
+                    The field age pattern is {{age.errors.pattern.requiredPattern.requiredLength}}
+                </div>
+            </div>
     </div>
     <div class="form-group form-footer text-center buttons">
         <button (click)="backToUsers()" class="btn btn-primary">BACK</button>
         <button class="btn btn-secondary" (click)="resetForm(form.form)"> RESET</button>
-        <button type="submit" class="btn btn-success" (click)="saveUser()"> SAVE</button>
+        <button type="submit" class="btn btn-success" (click)="saveUser()" [disabled]="form.invalid"> SAVE</button>
     </div>
 </form>
