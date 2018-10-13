@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { UserDataComponent } from './user-data/user-data.component';
 import { RoutingModuleModule } from './routing-module.module';
+import { RouteGuardService } from './route-guard.service';
 
 
 
@@ -27,14 +28,14 @@ import { RoutingModuleModule } from './routing-module.module';
     UserDataComponent,
   ],
   imports: [
-  BrowserModule,
+BrowserModule,
     FormsModule,
     HttpClientModule,
     AngularFontAwesomeModule,
     NgbModule.forRoot(),
     RoutingModuleModule
   ],
-  providers: [UserService],
+  providers: [UserService, RouteGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
