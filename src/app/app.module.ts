@@ -11,32 +11,10 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NavComponent } from './nav/nav.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalBasicComponent } from './modal-basic/modal-basic.component';
-import { RouterModule, Routes } from '@angular/router';
 import { UserDataComponent } from './user-data/user-data.component';
+import { RoutingModuleModule } from './routing-module.module';
 
-const routes: Routes = [
-  {
-    path: 'users',
-    component: UsersComponent
-  },
-  {
-    path: '',
-    redirectTo: 'users',
-    pathMatch: 'full'
-  },
-  {
-    path: 'users/new',
-    component: UserDetailComponent
-  },
-  {
-    path: 'users/:id/edit',
-    component: UserDetailComponent
-  },
-  {
-    path: 'users/:id',
-    component: UserDataComponent
-  }
-];
+
 
 @NgModule({
   declarations: [
@@ -49,12 +27,12 @@ const routes: Routes = [
     UserDataComponent,
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     FormsModule,
     HttpClientModule,
     AngularFontAwesomeModule,
     NgbModule.forRoot(),
-    RouterModule.forRoot(routes),
+    RoutingModuleModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
